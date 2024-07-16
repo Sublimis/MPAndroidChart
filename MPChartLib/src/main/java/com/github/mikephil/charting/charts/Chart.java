@@ -790,24 +790,27 @@ public abstract class Chart<T extends ChartData<? extends IDataSet<? extends Ent
 
             IDataSet set = mData.getDataSetByIndex(highlight.getDataSetIndex());
 
-            Entry e = mData.getEntryForHighlight(mIndicesToHighlight[i]);
-            int entryIndex = set.getEntryIndex(e);
-
-            // make sure entry not null
-            if (e == null || entryIndex > set.getEntryCount() * mAnimator.getPhaseX())
-                continue;
-
-            float[] pos = getMarkerPosition(highlight);
-
-            // check bounds
-            if (!mViewPortHandler.isInBounds(pos[0], pos[1]))
-                continue;
-
-            // callbacks to update the content
-            mMarker.refreshContent(e, highlight);
-
-            // draw the marker
-            mMarker.draw(canvas, pos[0], pos[1]);
+            if (set != null)
+            {
+                Entry e = mData.getEntryForHighlight(mIndicesToHighlight[i]);
+                int entryIndex = set.getEntryIndex(e);
+    
+                // make sure entry not null
+                if (e == null || entryIndex > set.getEntryCount() * mAnimator.getPhaseX())
+                    continue;
+    
+                float[] pos = getMarkerPosition(highlight);
+    
+                // check bounds
+                if (!mViewPortHandler.isInBounds(pos[0], pos[1]))
+                    continue;
+    
+                // callbacks to update the content
+                mMarker.refreshContent(e, highlight);
+    
+                // draw the marker
+                mMarker.draw(canvas, pos[0], pos[1]);
+            }
         }
     }
 
